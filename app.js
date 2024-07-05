@@ -1,31 +1,26 @@
 const display = document.querySelector("#input-box");
 const btn = document.querySelectorAll("button");
 
-let btnArray = Array.from(btn);
-// console.log(btnArray)
 let str = '';
-btnArray.forEach( btn => {
 
-    btn.addEventListener('click', (e) => {
+btn.forEach(button => {
+    button.addEventListener('click', (e) => {
+        const buttonValue = e.target.innerHTML;
 
-        if(e.target.innerHTML == 'DEL'){
-            str = str.substring(0, str.length-1);
-            display.value = str;
-        }
-        else if(e.target.innerHTML === 'AC'){
+        if (buttonValue === 'DEL') {
+            str = str.substring(0, str.length - 1);
+        } else if (buttonValue === 'AC') {
             str = '';
-            display.value = str;
+        } else if (buttonValue === '=') {
+            try {
+                str = eval(str);
+            } catch (error) {
+                str = 'Error';
+                console.error('Error during evaluation:', error);
+            }
+        } else {
+            str += buttonValue;
         }
-        else if(e.target.innerHTML == '='){
-            str = eval(str);
-            display.value = str;
-        }
-
-        else{
-            str+=e.target.innerHTML;
-             display.value = str;
-        }
-        
-
-    })
-})
+        display.value = str;
+    });
+});
